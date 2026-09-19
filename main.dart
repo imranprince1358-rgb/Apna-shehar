@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() => runApp(const ApnaSheharApp());
+import 'package:firebase_core/firebase_core.dart';
+ => runApp(const ApnaSheharApp());
 
 class ApnaSheharApp extends StatelessWidget {
   const ApnaSheharApp({super.key});
