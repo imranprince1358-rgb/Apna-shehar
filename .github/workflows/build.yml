@@ -1,0 +1,43 @@
+name: Build Apna Shehar APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Extract Flutter project
+        run: |
+          rm -rf app
+          mkdir app
+          unzip -q apna_shehar_flutter_mvp.zip -d app
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Create Android platform files
+        working-directory: app
+        run: flutter create . --platforms=android
+
+      - name: Install dependencies
+        working-directory: app
+        run: flutter pub get
+
+      - name: Build APK
+        working-directory: app
+        run: flutter build apk --release
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: apna-shehar-apk
+          path: app/build/app/outputs/flutter-apk/app-release.apk
